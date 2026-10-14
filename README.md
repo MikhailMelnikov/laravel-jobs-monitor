@@ -15,7 +15,7 @@
 | Админка | Пакет |
 |---|---|
 | Backpack for Laravel | [`mikhailmelnikov/backpack-jobs-monitor`](https://github.com/MikhailMelnikov/backpack-jobs-monitor) |
-| Filament | в планах |
+| Filament | [`mikhailmelnikov/filament-jobs-monitor`](https://github.com/MikhailMelnikov/filament-jobs-monitor) |
 
 ## Требования
 
@@ -65,6 +65,7 @@ use MikhailMelnikov\JobsMonitor\UseCase;
 $tasks    = (new UseCase\GetScheduledTasksHandler())->handle();   // ScheduledTaskDto[]
 $overview = (new UseCase\GetQueueOverviewHandler())->handle();    // счётчики
 $queued   = (new UseCase\GetQueuedJobsHandler())->handle();       // пагинатор QueuedJobDto
+$page2    = (new UseCase\GetQueuedJobsHandler(perPage: 50, page: 2))->handle(); // страница явно, без query string
 $failed   = (new UseCase\GetFailedJobsHandler())->handle();       // пагинатор FailedJobDto
 
 try {

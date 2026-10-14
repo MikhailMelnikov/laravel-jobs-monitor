@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 — 2026-10-14
+
+- `GetQueuedJobsHandler` and `GetFailedJobsHandler` accept an optional `page` argument:
+  the page number can be passed explicitly when it does not come from the query string
+  (e.g. Livewire requests).
+
 ## 1.1.0 — 2026-10-14
 
 - Use case handlers are no longer `final`, their properties and helpers are `protected`:

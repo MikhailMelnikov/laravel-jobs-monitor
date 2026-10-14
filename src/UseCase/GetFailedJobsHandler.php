@@ -29,11 +29,13 @@ class GetFailedJobsHandler
      * @param int|null         $perPage  Jobs per page; null — `jobs-monitor.per_page`
      * @param string           $pageName Query string parameter of the page number
      * @param QueueTables|null $tables   Queue tables; null — resolved from the container
+     * @param int|null         $page     Page number; null — read from the query string by $pageName
      */
     public function __construct(
         protected readonly ?int $perPage = null,
         protected readonly string $pageName = 'failed_page',
         ?QueueTables $tables = null,
+        protected readonly ?int $page = null,
     ) {
         $this->tables = $tables ?? Container::getInstance()->make(QueueTables::class);
     }
@@ -48,7 +50,7 @@ class GetFailedJobsHandler
         /** @var Paginator<int, stdClass> $paginator */
         $paginator = $this->tables->failedJobs()
             ->orderByDesc('id')
-            ->paginate(perPage: $this->perPage ?? (int) Config::get('jobs-monitor.per_page', 25), pageName: $this->pageName);
+            ->paginate(perPage: $this->perPage ?? (int) Config::get('jobs-monitor.per_page', 25), pageName: $this->pageName, page: $this->page);
 
         $rows = $paginator->getCollection();
 

@@ -129,6 +129,25 @@ class QueueJobsHandlersTest extends TestCase
     }
 
     /**
+     * Номер страницы можно передать явно — без query string (например, из Livewire).
+     */
+    public function testListsGivenPageWithoutQueryString(): void
+    {
+        $this->pushJob('App\Jobs\FirstJob');
+        $this->pushJob('App\Jobs\SecondJob');
+        $this->pushFailedJob('first-uuid', 'Exception: first');
+        $this->pushFailedJob('second-uuid', 'Exception: second');
+
+        $queued = (new GetQueuedJobsHandler(perPage: 1, page: 2))->handle();
+        $failed = (new GetFailedJobsHandler(perPage: 1, page: 2))->handle();
+
+        self::assertSame(2, $queued->currentPage());
+        self::assertSame('App\Jobs\SecondJob', $queued->items()[0]->name);
+        self::assertSame(2, $failed->currentPage());
+        self::assertSame('first-uuid', $failed->items()[0]->uuid);
+    }
+
+    /**
      * Задачу, ожидающую воркера, можно удалить из очереди.
      */
     public function testDeletesWaitingJob(): void
