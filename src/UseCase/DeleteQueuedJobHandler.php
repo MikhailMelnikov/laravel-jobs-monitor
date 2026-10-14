@@ -16,17 +16,17 @@ use MikhailMelnikov\JobsMonitor\Support\QueueTables;
  * Needed when a wrong or stuck job got into the queue and there is no point
  * in waiting for a worker to run it.
  */
-final class DeleteQueuedJobHandler
+class DeleteQueuedJobHandler
 {
     /**
      * Queue tables.
      */
-    private readonly QueueTables $tables;
+    protected readonly QueueTables $tables;
 
     /**
      * Audit log of manual actions.
      */
-    private readonly ActionLogger $logger;
+    protected readonly ActionLogger $logger;
 
     /**
      * @param int               $id     Record id in the jobs table
@@ -34,7 +34,7 @@ final class DeleteQueuedJobHandler
      * @param ActionLogger|null $logger Audit log; null — resolved from the container
      */
     public function __construct(
-        private readonly int $id,
+        protected readonly int $id,
         ?QueueTables $tables = null,
         ?ActionLogger $logger = null,
     ) {

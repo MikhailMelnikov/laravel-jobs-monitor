@@ -10,12 +10,12 @@ use MikhailMelnikov\JobsMonitor\Support\QueueTables;
 /**
  * Number of failed queue jobs — a counter for admin navigation.
  */
-final class CountFailedJobsHandler
+class CountFailedJobsHandler
 {
     /**
      * Queue tables.
      */
-    private readonly QueueTables $tables;
+    protected readonly QueueTables $tables;
 
     /**
      * @param QueueTables|null $tables Queue tables; null — resolved from the container

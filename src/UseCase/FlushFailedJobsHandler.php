@@ -12,17 +12,17 @@ use MikhailMelnikov\JobsMonitor\Support\ActionLogger;
 /**
  * Delete all failed job records — the equivalent of `php artisan queue:flush`.
  */
-final class FlushFailedJobsHandler
+class FlushFailedJobsHandler
 {
     /**
      * Failed job storage.
      */
-    private readonly FailedJobProviderInterface $provider;
+    protected readonly FailedJobProviderInterface $provider;
 
     /**
      * Audit log of manual actions.
      */
-    private readonly ActionLogger $logger;
+    protected readonly ActionLogger $logger;
 
     /**
      * @param FailedJobProviderInterface|null $provider Failed job storage; null — resolved from the container

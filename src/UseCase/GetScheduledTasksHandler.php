@@ -17,12 +17,12 @@ use Throwable;
 /**
  * List of scheduler tasks — the equivalent of `php artisan schedule:list`.
  */
-final class GetScheduledTasksHandler
+class GetScheduledTasksHandler
 {
     /**
      * Access to the scheduler tasks.
      */
-    private readonly ScheduledTaskLocator $locator;
+    protected readonly ScheduledTaskLocator $locator;
 
     /**
      * @param ScheduledTaskLocator|null $locator Access to the scheduler tasks; null — resolved from the container
@@ -50,7 +50,7 @@ final class GetScheduledTasksHandler
      *
      * @param Event $event Scheduler task
      */
-    private function makeDto(Event $event): ScheduledTaskDto
+    protected function makeDto(Event $event): ScheduledTaskDto
     {
         return new ScheduledTaskDto(
             id: $this->locator->makeId($event),
@@ -74,7 +74,7 @@ final class GetScheduledTasksHandler
      *
      * @return CarbonInterface|null null when the expression cannot be parsed
      */
-    private function resolveNextRunDate(Event $event): ?CarbonInterface
+    protected function resolveNextRunDate(Event $event): ?CarbonInterface
     {
         try {
             return $event->nextRunDate();
@@ -90,7 +90,7 @@ final class GetScheduledTasksHandler
      *
      * @param Event $event Scheduler task
      */
-    private function resolveTimezone(Event $event): string
+    protected function resolveTimezone(Event $event): string
     {
         $timezone = $event->timezone ?? Config::get('app.timezone');
 
@@ -105,7 +105,7 @@ final class GetScheduledTasksHandler
      *
      * @param Event $event Scheduler task
      */
-    private function isRunning(Event $event): bool
+    protected function isRunning(Event $event): bool
     {
         if (! $event->withoutOverlapping) {
             return false;

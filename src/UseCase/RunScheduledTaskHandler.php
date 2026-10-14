@@ -21,22 +21,22 @@ use Throwable;
  * The task is executed by the same code as on schedule: the scheduler event
  * itself decides whether to push a job to the queue or run an artisan command.
  */
-final class RunScheduledTaskHandler
+class RunScheduledTaskHandler
 {
     /**
      * Access to the scheduler tasks.
      */
-    private readonly ScheduledTaskLocator $locator;
+    protected readonly ScheduledTaskLocator $locator;
 
     /**
      * Container the scheduler runs the task with.
      */
-    private readonly Container $container;
+    protected readonly Container $container;
 
     /**
      * Audit log of manual actions.
      */
-    private readonly ActionLogger $logger;
+    protected readonly ActionLogger $logger;
 
     /**
      * @param string                    $taskId    Task identifier from {@see ScheduledTaskLocator::makeId()}
@@ -46,8 +46,8 @@ final class RunScheduledTaskHandler
      * @param ActionLogger|null         $logger    Audit log; null — resolved from the container
      */
     public function __construct(
-        private readonly string $taskId,
-        private readonly RunMode $mode,
+        protected readonly string $taskId,
+        protected readonly RunMode $mode,
         ?ScheduledTaskLocator $locator = null,
         ?Container $container = null,
         ?ActionLogger $logger = null,
@@ -101,7 +101,7 @@ final class RunScheduledTaskHandler
      *
      * @throws Throwable Task execution error
      */
-    private function run(Event $event): void
+    protected function run(Event $event): void
     {
         if ($this->mode === RunMode::QUEUE) {
             $event->run($this->container);

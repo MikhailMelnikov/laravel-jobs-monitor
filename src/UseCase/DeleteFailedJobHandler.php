@@ -13,17 +13,17 @@ use MikhailMelnikov\JobsMonitor\Support\ActionLogger;
 /**
  * Delete a failed job record — the equivalent of `php artisan queue:forget`.
  */
-final class DeleteFailedJobHandler
+class DeleteFailedJobHandler
 {
     /**
      * Failed job storage.
      */
-    private readonly FailedJobProviderInterface $provider;
+    protected readonly FailedJobProviderInterface $provider;
 
     /**
      * Audit log of manual actions.
      */
-    private readonly ActionLogger $logger;
+    protected readonly ActionLogger $logger;
 
     /**
      * @param string                          $uuid     Failed job UUID
@@ -31,7 +31,7 @@ final class DeleteFailedJobHandler
      * @param ActionLogger|null               $logger   Audit log; null — resolved from the container
      */
     public function __construct(
-        private readonly string $uuid,
+        protected readonly string $uuid,
         ?FailedJobProviderInterface $provider = null,
         ?ActionLogger $logger = null,
     ) {

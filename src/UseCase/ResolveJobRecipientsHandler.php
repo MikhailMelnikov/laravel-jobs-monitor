@@ -21,13 +21,13 @@ use Throwable;
  * The current address is shown: if it was fixed after the failure, the list
  * shows the fixed one — the one the retry will use.
  */
-final class ResolveJobRecipientsHandler
+class ResolveJobRecipientsHandler
 {
     /**
      * @param array<array-key, array{emails: string[], class: string|null, ids: array<int, int|string>}|null> $references
      *        Recipient references under arbitrary keys
      */
-    public function __construct(private readonly array $references)
+    public function __construct(protected readonly array $references)
     {
     }
 
@@ -77,7 +77,7 @@ final class ResolveJobRecipientsHandler
      *
      * @return array<string, array<int|string, string|null>> Address by model class and id
      */
-    private function fetchEmails(): array
+    protected function fetchEmails(): array
     {
         $idsByClass = [];
 

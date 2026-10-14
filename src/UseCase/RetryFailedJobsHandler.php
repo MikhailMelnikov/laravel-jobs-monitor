@@ -14,18 +14,18 @@ use MikhailMelnikov\JobsMonitor\Support\ActionLogger;
  *
  * The jobs are pushed back to the queue and will be processed by a worker.
  */
-final class RetryFailedJobsHandler
+class RetryFailedJobsHandler
 {
     /**
      * Audit log of manual actions.
      */
-    private readonly ActionLogger $logger;
+    protected readonly ActionLogger $logger;
 
     /**
      * @param string[]          $uuids  Failed job UUIDs; empty array — retry all
      * @param ActionLogger|null $logger Audit log; null — resolved from the container
      */
-    public function __construct(private readonly array $uuids = [], ?ActionLogger $logger = null)
+    public function __construct(protected readonly array $uuids = [], ?ActionLogger $logger = null)
     {
         $this->logger = $logger ?? Container::getInstance()->make(ActionLogger::class);
     }

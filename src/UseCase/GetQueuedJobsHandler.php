@@ -17,12 +17,12 @@ use stdClass;
 /**
  * Jobs waiting for a queue worker (the jobs table).
  */
-final class GetQueuedJobsHandler
+class GetQueuedJobsHandler
 {
     /**
      * Queue tables.
      */
-    private readonly QueueTables $tables;
+    protected readonly QueueTables $tables;
 
     /**
      * @param int|null         $perPage  Jobs per page; null — `jobs-monitor.per_page`
@@ -30,8 +30,8 @@ final class GetQueuedJobsHandler
      * @param QueueTables|null $tables   Queue tables; null — resolved from the container
      */
     public function __construct(
-        private readonly ?int $perPage = null,
-        private readonly string $pageName = 'queue_page',
+        protected readonly ?int $perPage = null,
+        protected readonly string $pageName = 'queue_page',
         ?QueueTables $tables = null,
     ) {
         $this->tables = $tables ?? Container::getInstance()->make(QueueTables::class);
@@ -57,7 +57,7 @@ final class GetQueuedJobsHandler
      *
      * @param stdClass $row jobs row
      */
-    private function makeDto(stdClass $row): QueuedJobDto
+    protected function makeDto(stdClass $row): QueuedJobDto
     {
         $parser = new JobPayloadParser((string) $row->payload);
 

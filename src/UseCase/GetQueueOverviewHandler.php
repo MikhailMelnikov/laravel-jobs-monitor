@@ -10,12 +10,12 @@ use MikhailMelnikov\JobsMonitor\Support\QueueTables;
 /**
  * Queue state summary for the page header.
  */
-final class GetQueueOverviewHandler
+class GetQueueOverviewHandler
 {
     /**
      * Queue tables.
      */
-    private readonly QueueTables $tables;
+    protected readonly QueueTables $tables;
 
     /**
      * @param QueueTables|null $tables Queue tables; null — resolved from the container
@@ -49,7 +49,7 @@ final class GetQueueOverviewHandler
      *
      * @return array<string, int> Queue name => number of jobs
      */
-    private function countByQueue(): array
+    protected function countByQueue(): array
     {
         return $this->tables->jobs()
             ->selectRaw('queue, count(*) as total')

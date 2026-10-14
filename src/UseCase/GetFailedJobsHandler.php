@@ -18,12 +18,12 @@ use stdClass;
 /**
  * Failed queue jobs — the equivalent of `php artisan queue:failed`.
  */
-final class GetFailedJobsHandler
+class GetFailedJobsHandler
 {
     /**
      * Queue tables.
      */
-    private readonly QueueTables $tables;
+    protected readonly QueueTables $tables;
 
     /**
      * @param int|null         $perPage  Jobs per page; null — `jobs-monitor.per_page`
@@ -31,8 +31,8 @@ final class GetFailedJobsHandler
      * @param QueueTables|null $tables   Queue tables; null — resolved from the container
      */
     public function __construct(
-        private readonly ?int $perPage = null,
-        private readonly string $pageName = 'failed_page',
+        protected readonly ?int $perPage = null,
+        protected readonly string $pageName = 'failed_page',
         ?QueueTables $tables = null,
     ) {
         $this->tables = $tables ?? Container::getInstance()->make(QueueTables::class);
@@ -78,7 +78,7 @@ final class GetFailedJobsHandler
      * @param JobPayloadParser $parser    Parsed payload of the row
      * @param string|null      $recipient Recipient address when the job sends a notification
      */
-    private function makeDto(stdClass $row, JobPayloadParser $parser, ?string $recipient): FailedJobDto
+    protected function makeDto(stdClass $row, JobPayloadParser $parser, ?string $recipient): FailedJobDto
     {
         $exception = (string) $row->exception;
 
@@ -100,7 +100,7 @@ final class GetFailedJobsHandler
      *
      * @param string $exception Full stack trace
      */
-    private function firstLine(string $exception): string
+    protected function firstLine(string $exception): string
     {
         $firstLine = strtok($exception, "\n");
 
