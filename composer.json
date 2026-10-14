@@ -1,0 +1,59 @@
+{
+    "name": "mikhailmelnikov/laravel-jobs-monitor",
+    "description": "Admin-agnostic core for monitoring Laravel scheduled tasks and database queue jobs: list, run, retry, forget, flush.",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "queue",
+        "scheduler",
+        "failed jobs",
+        "jobs monitor"
+    ],
+    "authors": [
+        {
+            "name": "Mikhail Melnikov"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/console": "^12.0|^13.0",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/queue": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "illuminate/translation": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "laravel/pint": "^1.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "MikhailMelnikov\\JobsMonitor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MikhailMelnikov\\JobsMonitor\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MikhailMelnikov\\JobsMonitor\\JobsMonitorServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
